@@ -1,8 +1,10 @@
 import numpy as np
 import pandas as pd
+import generator as g
+import json
 
 
-class icusim(object):
+class ICUsim(object):
 
     def __init__(self, num_patients):
         self.num_patients = num_patients
@@ -20,26 +22,31 @@ class icusim(object):
                         'cumulated_balance_tev', 'sedation', 'mechvent', 'rrt',
                         'died_in_hosp', 'mortality_90d']
         self.df = pd.DataFrame(columns=self.columns)
-        for i in range(num_patients):
-            self.add_episode()
 
+    @property
+    def patients(self):
+        return self.df
 
-    def add_episode(self):
+    def load_config(self,filename):
+        values = {}
         custid = self.df['icustayid'].max()
         if np.isnan(custid):
             custid = 1
         else:
             custid += 1
-        n_blocs = np.random.randint(2,20)
-        values = {}
-        values['bloc'] =  list(range(n_blocs))
-        values['icustayid'] = [custid]*n_blocs
-        values['gender'] = [np.random.choice([0,1])] * n_blocs
-        values['charttime'] = list(range(4570416000,4570416000 + (n_blocs *14400), 14400))
-        values['age'] = [np.random.randint(13,85)] * n_blocs
-        newdf = pd.DataFrame(values)
-        self.df = pd.concat([self.df,newdf])
 
+        with open(filename) as config_file:
+            self.config = json.load(config_file)
+            gen = g.Generator()
+            for i in range(self.num_patients):
+                #    self.add_episode()
+                n_bloc = np.random.randint(2,20)
+                values['icustayid'] = [custid] * n_bloc
+                values['bloc'] =  list(range(n_bloc))
+                for var in self.config['Sepsis-ICU']['variables']:
+                    values[var] = gen.gen(n_bloc,self.config['Sepsis-ICU']['variables'][var])
+                newdf = pd.DataFrame(values)
+                self.df = pd.concat([self.df,newdf])
 
     def write_episodes(self, filename):
         self.df.to_csv(filename,index=False)

@@ -1,0 +1,81 @@
+{
+  "Sepsis-ICU": {
+    "variables": {
+        "gender": {
+          "type": "categorical",
+          "values": [0, 1]
+        },
+        "charttime": {
+          "type": "sequence",
+          "start": 4570416000,
+          "step": 14400
+        },
+        "age": {
+          "type": "integer",
+          "min": 13,
+          "max": 85
+        },
+        "elixhauser": {
+          "type": "integer",
+          "min": 0,
+          "max": 14
+        },
+        "re_admission": {
+          "type": "categorical",
+          "values": [0, 1]
+        },
+        "SOFA": {
+          "type": "integer",
+          "min": 0,
+          "max": 23
+        },
+        "SIRS": {
+          "type": "integer",
+          "min": 0,
+          "max": 4
+        },
+        "Weight_kg": {
+          "type": "float",
+          "min": 0,
+          "max": 295
+        },
+        "GCS": {
+          "type": "integer",
+          "min": 0,
+          "max": 15
+        },
+        "HR": {
+          "type": "integer",
+          "min": 0,
+          "max": 196
+        },
+        "SysBP": {
+          "type": "integer",
+          "min": 0,
+          "max": 200
+        },
+        "MeanBP": {
+          "type": "integer",
+          "min": 0,
+          "max": 200
+        },
+        "DiaBP": {
+          "type": "integer",
+          "min": 0,
+          "max": 200
+        },
+        "Shock_index": {
+          "type": "float",
+          "min": 0.5,
+          "max": 0.7
+        },
+        "RR": {
+          "type": "integer",
+          "min": 0,
+          "max": 50
+        }
+
+
+    }
+  }
+}

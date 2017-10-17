@@ -11,7 +11,7 @@
           "step": 14400
         },
         "age": {
-          "type": "integer",
+          "type": "static",
           "min": 13,
           "max": 85
         },
@@ -73,6 +73,213 @@
           "type": "integer",
           "min": 0,
           "max": 50
+        },
+        "SpO2": {
+          "type": "float",
+          "min": 75,
+          "max": 100
+        },
+        "Temp_C": {
+          "type": "float",
+          "min": 34,
+          "max": 42
+        },
+        "FiO2_1": {
+          "type": "float",
+          "min": 0.21,
+          "max": 1.0
+        },
+        "Potassium": {
+          "type": "float",
+          "min": 1.7,
+          "max": 10
+        },
+        "Sodium": {
+          "type": "float",
+          "min": 97,
+          "max": 177
+        },
+        "Chloride": {
+          "type": "integer",
+          "min": 70,
+          "max": 150
+        },
+        "Glucose": {
+          "type": "float",
+          "min": 1,
+          "max": 947
+        },
+        "BUN": {
+          "type": "integer",
+          "min": 0,
+          "max": 921
+        },
+        "Creatinine": {
+          "type": "float",
+          "min": 0,
+          "max": 132
+        },
+        "Magnesium": {
+          "type": "float",
+          "min": 0,
+          "max": 8
+        },
+        "Calcium": {
+          "type": "float",
+          "min": 0,
+          "max": 19
+        },
+        "Ionised_Ca": {
+          "type": "float",
+          "min": 0,
+          "max": 3.63
+        },
+        "CO2_mEqL": {
+          "type": "float",
+          "min": 0,
+          "max": 118
+        },
+        "SGOT": {
+          "type": "float",
+          "min": 0,
+          "max": 9955
+        },
+        "SGPT": {
+          "type": "float",
+          "min": 0,
+          "max": 9830
+        },
+        "Total_bili": {
+          "type": "float",
+          "min": 0,
+          "max": 93.8
+        },
+        "Albumin": {
+          "type": "float",
+          "min": 1.0,
+          "max": 5.9
+        },
+        "Hb": {
+          "type": "float",
+          "min": 0,
+          "max": 19.7
+        },
+        "WBC_count": {
+          "type": "float",
+          "min": 0.1,
+          "max": 471.7
+        },
+        "Platelets_count": {
+          "type": "integer",
+          "min": 5,
+          "max": 1980
+        },
+        "PTT": {
+          "type": "float",
+          "min": 0,
+          "max": 162
+        },
+        "PT": {
+          "type": "float",
+          "min": 7,
+          "max": 150
+        },
+        "INR": {
+          "type": "float",
+          "min": 0,
+          "max": 19.3
+        },
+        "Arterial_pH": {
+          "type": "float",
+          "min": 6.77,
+          "max": 7.76
+        },
+        "paO2": {
+          "type": "float",
+          "min": 0,
+          "max": 695
+        },
+        "paCO2": {
+          "type": "float",
+          "min": 0,
+          "max": 180.3
+        },
+        "Arterial_BE": {
+          "type": "float",
+          "min": -32.5,
+          "max": 36
+        },
+        "Arterial_lactate": {
+          "type": "float",
+          "min": 7,
+          "max": 150
+        },
+        "HCO3": {
+          "type": "integer",
+          "min": 0,
+          "max": 142
+        },
+        "PaO2_FiO2": {
+          "type": "float",
+          "min": 0,
+          "max": 3247
+        },
+        "median_dose_vaso": {
+          "type": "float",
+          "min": 0,
+          "max": 6.7
+        },
+        "max_dose_vaso": {
+          "type": "float",
+          "min": 0,
+          "max": 10.3
+        },
+        "input_total_tev": {
+          "type": "integer",
+          "min": -20000,
+          "max": 315000
+        },
+        "input_4hourly_tev": {
+          "type": "integer",
+          "min": 0,
+          "max": 10000
+        },
+        "output_total": {
+          "type": "integer",
+          "min": 0,
+          "max": 231820
+        },
+        "output_4hourly": {
+          "type": "integer",
+          "min": 0,
+          "max": 7600
+        },
+        "cumulated_balance_tev": {
+          "type": "integer",
+          "min": -188000,
+          "max": 313000
+        },
+        "sedation": {
+          "type": "categorical",
+          "values": [0, 1]
+        },
+        "mechvent": {
+          "type": "categorical",
+          "values": [0, 1]
+        },
+        "rrt": {
+          "type": "categorical",
+          "values": [0, 1]
+        },
+        "died_in_hosp": {
+          "type": "static",
+          "min": 0,
+          "max": 1
+        },
+        "mortality_90d": {
+          "type": "static",
+          "min": 0,
+          "max": 1
         }
 
 

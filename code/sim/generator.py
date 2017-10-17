@@ -13,6 +13,8 @@ class Generator(object):
             return self.gen_categorical(n,var)
         elif var['type'] == 'float':
             return self.gen_float(n,var)
+        elif var['type'] == 'static':
+            return self.gen_static(n,var)
         else:
             raise(ValueError("unknown type to generate: '%s'" % var['type']))
 
@@ -35,3 +37,8 @@ class Generator(object):
         f_min = float(var['min'])
         f_max = float(var['max'])
         return np.random.uniform(f_min,f_max,n)
+
+    def gen_static(self,n,var):
+        i_min = var['min']
+        i_max = var['max']
+        return [np.random.randint(i_min,i_max)] * n

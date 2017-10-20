@@ -28,7 +28,6 @@ class ICUsim(object):
         return self.df
 
     def load_config(self,filename):
-        values = {}
         custid = self.df['icustayid'].max()
         if np.isnan(custid):
             custid = 1
@@ -38,15 +37,18 @@ class ICUsim(object):
         with open(filename) as config_file:
             self.config = json.load(config_file)
             gen = g.Generator()
+            values = {k : [] for k in self.config['Sepsis-ICU']['variables']}
+            values['icustayid'] = []
+            values['bloc'] = []
             for i in range(self.num_patients):
                 #    self.add_episode()
                 n_bloc = np.random.randint(2,20)
-                values['icustayid'] = [custid] * n_bloc
-                values['bloc'] =  list(range(n_bloc))
+                values['icustayid'].extend([custid] * n_bloc)
+                values['bloc'].extend(list(range(n_bloc)))
                 for var in self.config['Sepsis-ICU']['variables']:
-                    values[var] = gen.gen(n_bloc,self.config['Sepsis-ICU']['variables'][var])
-                newdf = pd.DataFrame(values)
-                self.df = pd.concat([self.df,newdf])
+                    values[var].extend(gen.gen(n_bloc,self.config['Sepsis-ICU']['variables'][var]))
+            newdf = pd.DataFrame(values)
+            self.df = pd.concat([self.df,newdf])
 
     def write_episodes(self, filename):
         self.df.to_csv(filename,index=False)

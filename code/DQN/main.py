@@ -23,8 +23,9 @@ if __name__ == "__main__":
 
     ######## build training set ########
     prefix = '../../data/'
-    prp = PatientRecordProcessor.PatientRecordProcessor(prefix + 'Sepsis_imp.csv', prefix + 'states_list.pkl')
-
+    prp = PatientRecordProcessor.PatientRecordProcessor()
+    #prp.load_csv(prefix + 'Sepsis_imp.csv', prefix + 'states_list.pkl')
+    prp.load_sim(10000,'../sim/config.json')
     histories = prp.build_training_history()
 
     ######## train ########

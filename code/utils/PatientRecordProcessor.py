@@ -2,6 +2,14 @@ import numpy as np
 import discretize_sepsis_actions as discretizer
 import pickle as pkl
 import pandas as pd
+from sklearn.cluster import MiniBatchKMeans
+
+
+import sys
+sys.path.append('../sim')
+
+import icu as icu
+
 
 class PatientRecordProcessor:
 
@@ -20,7 +28,7 @@ class PatientRecordProcessor:
                 'died_in_hosp', 'mortality_90d']
 
     observ_cols = ['elixhauser','re_admission', 'SOFA', 'SIRS', 'Weight_kg', 'GCS', 'HR',
-                'SysBP', 'MeanBP', 'DiaBP', 'Shock_Index', 'RR', 'SpO2',
+                'SysBP', 'MeanBP', 'DiaBP', 'RR', 'SpO2',
                 'Temp_C', 'FiO2_1', 'Potassium', 'Sodium', 'Chloride',
                 'Glucose', 'BUN', 'Creatinine', 'Magnesium', 'Calcium',
                 'Ionised_Ca', 'CO2_mEqL', 'SGOT', 'SGPT', 'Total_bili',
@@ -30,17 +38,37 @@ class PatientRecordProcessor:
                 'output_total', 'output_4hourly',
                 'sedation', 'mechvent', 'rrt']
 
-    def __init__(self, raw_path, cluster_path):
+    n_clusters = 2000
 
+    def __init__(self):
+        self.patient_map = None
+
+
+    def load_sim(self,n_patients,config_path):
+        print ('generating episodes...')
+        icusim = icu.ICUsim(n_patients)
+        icusim.load_config(config_path)
+        self.df = icusim.patients
+        observations = self.df[self.observ_cols]
+        print ('generating clusters...')
+        mbk = MiniBatchKMeans(init='k-means++', n_clusters=self.n_clusters,
+                                batch_size=100,n_init=10, max_no_improvement=10,
+                                verbose=0, init_size=3*self.n_clusters,random_state=0)
+        mbk.fit(observations)
+        self.clusters = mbk.cluster_centers_
+        print ( 'discretizing actions ...' )
+        self.discretize_actions()
+        print ( 'initialization succeeded' )
+
+
+    def load_csv(self, raw_path, cluster_path):
         print ( 'loading dataset ...' )
-        #self.data = np.genfromtxt(raw_path, dtype=float, delimiter=',', skip_header=1)
         self.df = pd.read_csv(raw_path)
         print ( 'loading clustered states ...' )
         self.clusters = pkl.load(open(cluster_path, 'rb'), encoding='latin1')
         print ( 'discretizing actions ...' )
         self.discretize_actions()
-        self.patient_map = None
-        print ( 'initialization succeed' )
+        print ( 'initialization succeeded' )
 
     def discretize_actions(self):
 

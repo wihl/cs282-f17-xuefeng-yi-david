@@ -49,15 +49,15 @@ class RestrictActions(object):
                 self.action_freq[int(s)][a] += value
 
 
-    def get_actions(self, state):
+    def get_actions(self, state, min_freq=30):
         """
         For a given state, return the list of appropriate actions sorted
         in descending order by most often seen in the observations
         """
-        zeros = np.where(self.action_freq[state] == 0)[0].tolist()
+        low_data = np.where(self.action_freq[state] < min_freq)[0].tolist()
         sorted_actions = np.argsort(self.action_freq[state])[::-1].tolist()
-        # Remove actions with a zero count
-        for i in zeros:
+        # Remove actions with a low count
+        for i in low_data:
             sorted_actions.remove(i)
         return sorted_actions
 

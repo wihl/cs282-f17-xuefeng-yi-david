@@ -140,26 +140,26 @@ class DQN:
     def store_transition(self, histories):
         self.memory = histories
 
-            #####################
-            # if with simulator #
-            #####################
-            #     def store_transition(self, s, a, r, s_):
-            #         if not hasattr(self, 'memory_counter'):
-            #             self.memory_counter = 0
-            #         transition = np.hstack((s, a, r, s_))
-            #         # start to replace when full
-            #         index = self.memory_counter % self.memory_size
-            #         self.memory[index, :] = transition
-            #         self.memory_counter += 1
+    #####################
+    # if with simulator #
+    #####################
+    #     def store_transition(self, s, a, r, s_):
+    #         if not hasattr(self, 'memory_counter'):
+    #             self.memory_counter = 0
+    #         transition = np.hstack((s, a, r, s_))
+    #         # start to replace when full
+    #         index = self.memory_counter % self.memory_size
+    #         self.memory[index, :] = transition
+    #         self.memory_counter += 1
 
-            #     def choose_action(self, observation):
-            #         observation = observation[np.newaxis, :]
-            #         if np.random.uniform() > self.epsilon:
-            #             actions_value = self.sess.run(self.q_eval, feed_dict={self.s: observation})
-            #             action = np.argmax(actions_value)
-            #         else:
-            #             action = np.random.randint(0, self.num_actions)
-            #         return action
+    def choose_action(self, observation):
+        observation = observation[np.newaxis, :]
+        if np.random.uniform() > self.epsilon:
+            actions_value = self.sess.run(self.q_eval, feed_dict={self.s: observation})
+            action = np.argmax(actions_value)
+        else:
+            action = np.random.randint(0, self.num_actions)
+        return action
     
     def learn(self):
         if self.learn_step_counter % self.replace_target_iter == 0 and self.learn_step_counter != 0:

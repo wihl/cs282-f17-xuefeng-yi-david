@@ -14,7 +14,7 @@ class RestrictActions(object):
         self.n_states = n_states
         self.n_actions = n_actions
 
-    def load_sas_as_episodes(self, episodes):
+    def load_sas_as_episodes(self, episodes, action_col):
         """
         episodes is expected to a pandas dataframe that has already been
         sorted by id, and then bloc (or timestamp). It is expected to
@@ -24,7 +24,7 @@ class RestrictActions(object):
         i =0
         for name, transitions in episodes:
             state = transitions['state'].tolist()
-            action = transitions['phy_action'].tolist()
+            action = transitions[action_col].tolist()
             for i in range(len(state)-2):
                 self.sas_count[state[i],action[i],state[i+1]] += 1
         self.build_action_set()

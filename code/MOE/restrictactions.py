@@ -73,6 +73,7 @@ class RestrictActions(object):
             sorted_actions.remove(i)
         total_actions = np.sum(self.action_freq[state])
         action = sorted_actions[0] # top choice
+        #print (self.action_freq[state][action] / total_actions)
         if (self.action_freq[state][action] / total_actions > min_percent):
             return action
         else:

@@ -285,3 +285,5 @@ TSWLatexianTemp*
 *~[0-9]*
 
 __pycache__
+
+code/MOE/MOE.ipynb

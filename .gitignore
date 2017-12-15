@@ -1,3 +1,11 @@
+# LaTeX
+*.aux
+*.log
+*.bbl
+*.blg
+*.gz
+
+# Python
 data/
 logs/
 # Byte-compiled / optimized / DLL files

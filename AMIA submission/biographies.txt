@@ -1,0 +1,20 @@
+Xuefeng Peng is a Master of Engineering (M.E.) candidate at the Harvard John A. Paulson School of Engineering and Applied Sciences. 
+
+David Wihl is a student at the Harvard Graduate School of Arts and Sciences.
+
+Yi Ding is a masters candidate at the Harvard T.H. Chan School of Public Health. 
+
+Omer Gottesman is a PhD candidate in applied physics at the Harvard John A. Paulson School of Engineering and Applied Sciences.
+
+Finale Doshi-Velez is excited about methods to turn data into actionable knowledge. Her core research in machine learning, computational statistics, and data science is inspired by---and often applied to---the objective of accelerating scientific progress and practical impact in healthcare and other domains.
+
+Specifically, she is interested in questions such as: How can we design robust, principled models to combine complex data sets with other knowledge sources? How can we design models that summarize and generate hypotheses from such data? How can we characterize the uncertainty in large, heterogeneous data to provide better support for decisions? Finale Doshi-Velez is interested in developing the probabilistic methods to address these questions.
+
+Prior to joining SEAS, Finale Doshi-Velez was an NSF CI-TRaCS Postdoctoral Fellow at the Center for Biomedical Informatics at Harvard Medical School. She was a Marshall Scholar at Trinity College, Cambridge from 2007-2009, and she was named one of IEEE's "AI Top 10 to Watch" in 2013.
+
+Li-wei Lehman is a research scientist in the Laboratory for Computational Physiology at the MIT Institute for Medical Engineering & Science (IMES). She works on the PhysioNet project, focusing on the study of complex biomedical and physiologic signals. She also works on the MIMIC-III project to develop and evaluate advanced intensive care unit (ICU) patient monitoring and decision support systems. Her research focuses on the use of machine learning techniques for physiological and patient monitoring. Her interests include multivariate physiological and clinical time series analysis; application of machine learning techniques to track disease progression in patients; Bayesian non-parametric learning of patient phenotypes; and more generally, structure discovery and predictive modeling using large-scale physiological and clinical databases for improved patient monitoring.
+She received her Master’s degree in Computer Science from Georgia Institute of Technology, and her Ph.D. from Massachusetts Institute of Technology in June 2005.
+
+Matthieu Komorowski is an MD with full board certification in anesthesiology and critical care in both France and the UK. He was formerly a research fellow at the European Space Agency and is currently pursue a PhD at Imperial College and a research fellowship in intensive care at Charing Cross Hospital in London. A visiting scholar at the Laboratory for Computational Physiology at MIT, he collaborates with the MIT Critical Data group (Professor Leo Celi) on numerous projects involving secondary analysis of healthcare records.
+His research brings together expertise in machine learning and critical care to generate new medical evidence and build decision support systems, with a particular interest in sepsis.
+

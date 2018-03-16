@@ -99,14 +99,16 @@ criteria to the Multi-parameter Intelligent Monitoring in Intensive Care (MIMIC-
 \end{table}
 
 \textit{Cleaning and Preprocessing.}
-As in Raghu et al. \cite{DBLP:journals/corr/RaghuKCSG17}, patient histories were partitioned into 4-hour windows each containing fifty attributes, ranging from vitals (e.g. heart rate, mean blood pressure) to clinician assessments of the patient's conditions (e.g. sequential organ failure assessment (SOFA) score).  The full list of attributes is included in the Appendix as Appendix~\ref{appendix:preprocessing}. We removed the patients from their processed cohort that had any missing values. 
+As in Raghu et al. \cite{DBLP:journals/corr/RaghuKCSG17}, patient histories were partitioned into 4-hour windows each containing fifty attributes, ranging from vitals (e.g. heart rate, mean blood pressure) to clinician assessments of the patient's conditions (e.g. sequential organ failure assessment (SOFA) score).  The full list of attributes is included in the ~\nameref{appendices}. %\ref{appendix:preprocessing}
+We removed the patients from their processed cohort that had any missing values. 
 % Raghu et al. \cite{DBLP:journals/corr/RaghuKCSG17} imputed missing values via FILL; 
 
 % we removed the patients from their processed cohort that still had missing values.  
 % DW: TODO fill in Matthieu's imputation methods
 % XF: just refer, no spaces ...and save some works.
 
-The observations range from demographics, lab values and vital signs all of which have different scales.  Appendix  \ref{appendix:preprocessing} summarizes the preprocessing methods. Following Raghu et al., \cite{DBLP:journals/corr/RaghuKCSG17} we performed log transformations of observations with large values and standardized the remaining values. After the standardization and log transformation, all values were rescaled into $[0-1]$.  The data set was split into a fixed 75\% training and validation set and a 25\% test set. 
+The observations range from demographics, lab values and vital signs all of which have different scales.  A table in the \nameref{appendices} %Appendix  \ref{appendix:preprocessing}
+summarizes the preprocessing methods. Following Raghu et al., \cite{DBLP:journals/corr/RaghuKCSG17} we performed log transformations of observations with large values and standardized the remaining values. After the standardization and log transformation, all values were rescaled into $[0-1]$.  The data set was split into a fixed 75\% training and validation set and a 25\% test set. 
 
 % FDV: Do they show this?  Show usually means prove, and they don't even consider other interventions, do they?  I think you need a clinical citation that says that vasopressors and fluids are two important elements in sepsis management.  Also, be sure to update with the final choice of actions if you use Srivatsan's clustering - in any case, describe the start and end of each bin.  (Important for both sanity checks when reading and replication.) 
 \textit{Treatment Discretization.} In this work, we focus on administrating two drugs: intravenous (IV) fluid and vasopressor (VP). In the cohort, the usage of IV and VP for each patient are recorded at each 4-hour window; and follow Raghu's work\cite{DBLP:journals/corr/RaghuKCSG17}, the dosages for each drug are discretized into 5 bins, resulting in a $5\times5$ action space indexed from 0 to 24. Note that the first action ($a=0$) means ``no action" -- neither IV nor VP are prescribed.
@@ -135,7 +137,8 @@ Broadly, we are interested in reducing mortality among patients with sepsis.  Ho
 R(s,a,s^\prime) = - \log \frac{f(s^\prime)}{1-f(s^\prime)} f(s^\prime) + \log \frac{f(s)}{1-f(s)}
 \end{align}
 % FDV: This doesn't fit in the story -> we have "s" but this takes in only the current measurements.  
-To predict the probability of mortality, we trained a two-layer neural network with L1-regularized gradients (see Ross et al. \cite{nips2017timl} for details).  The L1 regularization encourages sparse local linear approximations, and thus makes its behaviors more interpretable. Additionally, to better interpret the predicted behaviors, we trained the network using the unencoded patient observations described in Appendix \ref{appendix:preprocessing}. We trained the network on a sampled, balanced training set which achieved a $73.1\%$ 10-fold crossed validated accuracy. We present the mortality log-odds distribution for each class in Appendix \ref{appendix:mortality-log-odds}. 
+To predict the probability of mortality, we trained a two-layer neural network with L1-regularized gradients (see Ross et al. \cite{nips2017timl} for details).  The L1 regularization encourages sparse local linear approximations, and thus makes its behaviors more interpretable. Additionally, to better interpret the predicted behaviors, we trained the network using the unencoded patient observations described in the preprocessing section of the \nameref{appendices}. %Appendix \ref{appendix:preprocessing}.
+We trained the network on a sampled, balanced training set which achieved a $73.1\%$ 10-fold crossed validated accuracy. We present the mortality log-odds distribution for each class in the \nameref{appendices} %Appendix \ref{appendix:mortality-log-odds}. 
 
 % Since state where mortality is true only constitute approximately $14\%$ of the dataset, we first selected all mortality states from our dataset; and then randomly selected an equal amount of non-mortality states.
 
@@ -209,7 +212,8 @@ In situations where the DDQN has little data, the DDQN can arbitrary policies, i
 We did not restrict kernel policy as it is effectively the physician policy over survivors, and thus cannot deviate too far from clinician actions.  As the MoE policy is a mixture of the kernel and DDQN policy, no additional restriction was needed to safe-guard it.
 
 \textit{Logistic-based Switching}
-The primary idea of logistic-based switching is to create a mixed policy per patient per time step that is overall superior to the distinct kernel and DQN policies. A probability as a function of the current state is assigned to each expert. The model used to predict the mortality probability described in \nameref{subsec:rewardformulation} demonstrates the associations between the mortality and various patient demographic and lab values in Appendix~\ref{appendix:gradients}. We examined several medical sources \cite{jones2009sequential,beier2011elevation,tamion2010albumin} to determine which features are most useful in the expert selection and chose: age, Elixhauser, SOFA, $FiO_{2}$, BUN, GCS, Albumin, trajectory length, and max distance from neighbors. 
+The primary idea of logistic-based switching is to create a mixed policy per patient per time step that is overall superior to the distinct kernel and DQN policies. A probability as a function of the current state is assigned to each expert. The model used to predict the mortality probability described in \nameref{subsec:rewardformulation} demonstrates the associations between the mortality and various patient demographic and lab values can be found in the \nameref{appendices}. %Appendix~\ref{appendix:gradients}. 
+We examined several medical sources \cite{jones2009sequential,beier2011elevation,tamion2010albumin} to determine which features are most useful in the expert selection and chose: age, Elixhauser, SOFA, $FiO_{2}$, BUN, GCS, Albumin, trajectory length, and max distance from neighbors. 
 
 The MoE model's switching function learns the weights and bias for these input features in order to assign probabilities for each expert. The function is described in Equation \ref{eq:moe}, where $X$ denotes the input features, $W_{k}$ and $b_{k}$ denote the weights for the input features and bias in terms of the kernel expert. $p_{k}$ and $p_{d}$ denote the assigned probability for kernel and DQN expert respectively. 
 
@@ -367,61 +371,66 @@ We would like to thank the other students in Harvard CS282R - Reinforcement Lear
 \bibliographystyle{unsrt}
 \bibliography{reference}
 
-\newpage
 \begin{appendices}
 
+\section*{Appendices}
+
+\label{appendices}
+Due to space constraints, all appendices are available at \\
+\href{https://dtak.github.io/cs282-f17-xuefeng-yi-david/peng\_sepsis\_moe\_appendix.pdf}{https://dtak.github.io/cs282-f17-xuefeng-yi-david/peng\_sepsis\_moe\_appendix.pdf}
+
 %--- Appendix A
-\section{Physiological Attributes and Preprocessing}
-\label{appendix:preprocessing}
+% \section{Physiological Attributes and Preprocessing}
+% \label{appendix:preprocessing}
 
-The following table summarizes all physiological attributes, treatments and corresponding preprocessing methods
-used in this paper.
+% The following table summarizes all physiological attributes, treatments and corresponding preprocessing methods
+% used in this paper.
 
-\begin{table}[ht]
-\centering
-%\caption*{Physiological attributes, treatments and corresponding preprocessing methods}
-%\label{table:preprocessing}
-\begin{tabular}{|l|l|}
-\hline
-Preprocessing   & Attributes \\ \hline
-Standardization & \begin{tabular}[c]
-{@{}l@{}}\texttt{age,Weight\_kg,GCS,HR,SysBP,MeanBP,DiaBP,RR,Temp\_C,FiO2\_1,}\\ 
-  \texttt{Potassium,Sodium,Chloride,Glucose,Magnesium,Calcium,Hb,}\\ 
-  \texttt{WBC\_count,Platelets\_count,PTT,PT,Arterial\_pH,paO2,paCO2,}\\ 
-  \texttt{Arterial\_BE,HCO3,Arterial\_lactate,SOFA,SIRS,Shock\_Index,PaO2\_FiO2,}\\ 
-  \texttt{cumulated\_balance\_tev, Elixhauser, Albumin, CO2\_mEqL, Ionised\_Ca}
-  \end{tabular} \\ 
-  \hline
-  Log transformation    & \begin{tabular}[c]
-    {@{}l@{}}\texttt{max\_dose\_vaso,SpO2,BUN,Creatinine,SGOT,SGPT,Total\_bili,}\\
-    \texttt{INR,input\_total\_tev,input\_4hourly\_tev,output\_total,output\_4hourly}
-    \end{tabular}                             \\ \hline
-\end{tabular}
-\end{table}
+% \begin{table}[ht]
+% \centering
+% %\caption*{Physiological attributes, treatments and corresponding preprocessing methods}
+% %\label{table:preprocessing}
+% \begin{tabular}{|l|l|}
+% \hline
+% Preprocessing   & Attributes \\ \hline
+% Standardization & \begin{tabular}[c]
+% {@{}l@{}}\texttt{age,Weight\_kg,GCS,HR,SysBP,MeanBP,DiaBP,RR,Temp\_C,FiO2\_1,}\\ 
+%   \texttt{Potassium,Sodium,Chloride,Glucose,Magnesium,Calcium,Hb,}\\ 
+%   \texttt{WBC\_count,Platelets\_count,PTT,PT,Arterial\_pH,paO2,paCO2,}\\ 
+%   \texttt{Arterial\_BE,HCO3,Arterial\_lactate,SOFA,SIRS,Shock\_Index,PaO2\_FiO2,}\\ 
+%   \texttt{cumulated\_balance\_tev, Elixhauser, Albumin, CO2\_mEqL, Ionised\_Ca}
+%   \end{tabular} \\ 
+%   \hline
+%   Log transformation    & \begin{tabular}[c]
+%     {@{}l@{}}\texttt{max\_dose\_vaso,SpO2,BUN,Creatinine,SGOT,SGPT,Total\_bili,}\\
+%     \texttt{INR,input\_total\_tev,input\_4hourly\_tev,output\_total,output\_4hourly}
+%     \end{tabular}                             \\ \hline
+% \end{tabular}
+% \end{table}
 
 %--- Appendix C
-\section{Predicted vs True Log-odds Mortality}
-\label{appendix:mortality-log-odds}
+% \section{Predicted vs True Log-odds Mortality}
+% \label{appendix:mortality-log-odds}
 
-The follow plot shows the predicted vs. true log-odds distribution for survivor and non-survivor classes.
-\begin{figure}[ht]
-\centering
-\includegraphics[width=0.7\textwidth]{figures/log-odds.png}
-%\caption{\label{fig:mortality-log-odds} Mortality log-odds distribution for mortality and survivor classes.}
-\end{figure}
+% The follow plot shows the predicted vs. true log-odds distribution for survivor and non-survivor classes.
+% \begin{figure}[ht]
+% \centering
+% \includegraphics[width=0.7\textwidth]{figures/log-odds.png}
+% %\caption{\label{fig:mortality-log-odds} Mortality log-odds distribution for mortality and survivor classes.}
+% \end{figure}
 
 %--- Appendix D
-\newpage
-\section{Mortality Gradients vs. Feature Values}
-\label{appendix:gradients}
+% \newpage
+% \section{Mortality Gradients vs. Feature Values}
+% \label{appendix:gradients}
 
-The following set of plots shows mortality gradients versus feature values. No single observation value is highly correlated with mortality.
+% The following set of plots shows mortality gradients versus feature values. No single observation value is highly correlated with mortality.
 
-\begin{figure}[ht]
-\centering
-\includegraphics[width=0.9\textwidth]{figures/gradients}
-%\caption{\label{fig:gradients} Mortality gradients versus feature values. No single observation value is highly correlated with mortality.}
-\end{figure}
+% \begin{figure}[ht]
+% \centering
+% \includegraphics[width=0.9\textwidth]{figures/gradients}
+% %\caption{\label{fig:gradients} Mortality gradients versus feature values. No single observation value is highly correlated with mortality.}
+% \end{figure}
 
 \end{appendices}
 
